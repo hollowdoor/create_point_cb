@@ -52,7 +52,7 @@ module.exports = function createPointCB(object){
 
             // pageX, and pageY change with page scroll
             // so we're not going to use those for x, and y.
-            // NOTE Firefox also aliases clientX/Y with x/y
+            // NOTE Most browsers also alias clientX/Y with x/y
             // so that's something to consider down the road.
 
             object.x = event.clientX;
