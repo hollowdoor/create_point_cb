@@ -1,5 +1,15 @@
 module.exports = function createPointCB(object){
 
+    // A persistent object (as opposed to returned object) is used to save memory
+    // This is good to prevent layout thrashing, or for games, and such
+
+    // NOTE
+    // This uses IE fixes which should be OK to remove some day. :)
+    // Some speed will be gained by removal of these.
+
+    // pointCB should be saved in a variable on return
+    // This allows the usage of element.removeEventListener
+
     return function pointCB(event){
 
         event = event || window.event; // IE-ism
@@ -7,10 +17,9 @@ module.exports = function createPointCB(object){
         object.element = this;
         object.type = event.type;
 
-        //Support touch
-        //http://www.creativebloq.com/javascript/make-your-site-work-touch-devices-51411644
-        //pageX, and pageY change with page scroll
-        //so we're not going to use those for x, and y.
+        // Support touch
+        // http://www.creativebloq.com/javascript/make-your-site-work-touch-devices-51411644
+
         if(event.targetTouches){
             object.x = event.targetTouches[0].clientX;
             object.y = event.targetTouches[0].clientY;
@@ -18,11 +27,13 @@ module.exports = function createPointCB(object){
             object.targetTouches = event.targetTouches;
             object.pageX = event.pageX;
             object.pageY = event.pageY;
-            object.type = event.type;
         }else{
+
             // If pageX/Y aren't available and clientX/Y are,
             // calculate pageX/Y - logic taken from jQuery.
             // (This is to support old IE)
+            // NOTE Hopefully this can be removed soon.
+
             if (event.pageX === null && event.clientX !== null) {
                 var eventDoc = (event.target && event.target.ownerDocument) || document;
                 var doc = eventDoc.documentElement;
@@ -39,12 +50,19 @@ module.exports = function createPointCB(object){
                 object.pageY = event.pageY;
             }
 
+            // pageX, and pageY change with page scroll
+            // so we're not going to use those for x, and y.
+            // NOTE Firefox also aliases clientX/Y with x/y
+            // so that's something to consider down the road.
+
             object.x = event.clientX;
             object.y = event.clientY;
 
+            //Here the touch list is simulated for mouse.
+
             object.targetTouches = object.touches = [{
                 target: this,
-                identifier: ''+this,
+                identifier: 0,//''+this, //Not sure what to do about this?
                 pageX: event.pageX,
                 pageY: event.pageY,
                 screenX: event.screenX,
@@ -55,4 +73,6 @@ module.exports = function createPointCB(object){
         }
 
     };
+
+    //NOTE Remember accessibility, Aria roles, and labels.
 };
