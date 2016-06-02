@@ -62,7 +62,7 @@ module.exports = function createPointCB(object){
 
             object.targetTouches = object.touches = [{
                 target: this,
-                identifier: 0,//''+this, //Not sure what to do about this?
+                identifier: '0',//''+this, //Not sure what to do about this?
                 pageX: event.pageX,
                 pageY: event.pageY,
                 screenX: event.screenX,
