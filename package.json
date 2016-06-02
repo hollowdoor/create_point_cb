@@ -1,0 +1,16 @@
+{
+  "name": "create-point-cb",
+  "version": "1.0.0",
+  "description": "Create a point from a DOM event",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "DOM",
+    "point",
+    "event"
+  ],
+  "author": "Quentin Engles <hollowdoor99@gmail.com>",
+  "license": "MIT"
+}
