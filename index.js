@@ -61,3 +61,8 @@ module.exports = function createPointCB(object){
 
     //NOTE Remember accessibility, Aria roles, and labels.
 };
+
+/*
+git remote add origin https://github.com/hollowdoor/create_point_cb.git
+git push -u origin master
+*/
