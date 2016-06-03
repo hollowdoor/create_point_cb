@@ -23,8 +23,6 @@ module.exports = function createPointCB(object){
         if(event.targetTouches){
             object.x = event.targetTouches[0].clientX;
             object.y = event.targetTouches[0].clientY;
-            object.touches = event.touches;
-            object.targetTouches = event.targetTouches;
             object.pageX = event.pageX;
             object.pageY = event.pageY;
         }else{
@@ -57,19 +55,6 @@ module.exports = function createPointCB(object){
 
             object.x = event.clientX;
             object.y = event.clientY;
-
-            //Here the touch list is simulated for mouse.
-
-            object.targetTouches = object.touches = [{
-                target: this,
-                identifier: '0',//''+this, //Not sure what to do about this?
-                pageX: event.pageX,
-                pageY: event.pageY,
-                screenX: event.screenX,
-                screenY: event.screenY,
-                clientX: event.clientX,
-                clientY: event.clientY
-            }];
         }
 
     };

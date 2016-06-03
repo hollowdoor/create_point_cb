@@ -30,10 +30,6 @@ Any object you pass to `createPointCB` will get these properties:
 -	pageX (the event.pageX value)
 -	pageY (thie event.pageY value)
 -	type (the event.type)
--	touches
--	targetTouches
-
-The properties `touches`, and `targetTouches` are simulated for mouse events. The object in their indexes is not a real Touch object.
 
 Use `create-point-cb` with any DOM event that will have `clientX`, or `clientY` properties. This usually would be **mousemove**, or the **touchmove** event on the `window` object.
 
