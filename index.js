@@ -1,4 +1,4 @@
-module.exports = function createPointCB(object){
+module.exports = function createPointCB(object, options){
 
     // A persistent object (as opposed to returned object) is used to save memory
     // This is good to prevent layout thrashing, or for games, and such
@@ -10,12 +10,26 @@ module.exports = function createPointCB(object){
     // pointCB should be saved in a variable on return
     // This allows the usage of element.removeEventListener
 
+    options = options || {};
+
+    var allowUpdate;
+
+    if(typeof options.allowUpdate === 'function'){
+        allowUpdate = options.allowUpdate;
+    }else{
+        allowUpdate = function(){return true;};
+    }
+
     return function pointCB(event){
 
         event = event || window.event; // IE-ism
         object.target = event.target || event.srcElement || event.originalTarget;
         object.element = this;
         object.type = event.type;
+
+        if(!allowUpdate(event)){
+            return;
+        }
 
         // Support touch
         // http://www.creativebloq.com/javascript/make-your-site-work-touch-devices-51411644
