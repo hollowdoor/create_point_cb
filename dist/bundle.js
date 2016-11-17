@@ -1,5 +1,7 @@
 'use strict';
 
+var typeFunc = require('type-func');
+
 function createPointCB(object, options) {
 
     // A persistent object (as opposed to returned object) is used to save memory
@@ -14,15 +16,13 @@ function createPointCB(object, options) {
 
     options = options || {};
 
-    var allowUpdate;
+    var allowUpdate = typeFunc.boolean(options.allowUpdate, true);
 
-    if (typeof options.allowUpdate === 'function') {
+    /*if(typeof options.allowUpdate === 'function'){
         allowUpdate = options.allowUpdate;
-    } else {
-        allowUpdate = function allowUpdate() {
-            return true;
-        };
-    }
+    }else{
+        allowUpdate = function(){return true;};
+    }*/
 
     return function pointCB(event) {
 
