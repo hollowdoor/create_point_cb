@@ -2,9 +2,11 @@
   "name": "create-point-cb",
   "version": "1.1.0",
   "description": "Create a point from a DOM event",
-  "main": "index.js",
+  "main": "dist/bundle.js",
+  "jsnext:main": "dist/bundle.es.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node ./rollit"
   },
   "keywords": [
     "DOM",
@@ -12,5 +14,12 @@
     "event"
   ],
   "author": "Quentin Engles <hollowdoor99@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "babel-preset-es2015-rollup": "^1.2.0",
+    "rollup-plugin-babel": "^2.6.1",
+    "rollup-plugin-commonjs": "^5.0.5",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "uglify-js": "^2.7.4"
+  }
 }

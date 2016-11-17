@@ -1,4 +1,6 @@
-module.exports = function createPointCB(object, options){
+'use strict';
+
+function createPointCB(object, options) {
 
     // A persistent object (as opposed to returned object) is used to save memory
     // This is good to prevent layout thrashing, or for games, and such
@@ -14,32 +16,36 @@ module.exports = function createPointCB(object, options){
 
     var allowUpdate;
 
-    if(typeof options.allowUpdate === 'function'){
+    if (typeof options.allowUpdate === 'function') {
         allowUpdate = options.allowUpdate;
-    }else{
-        allowUpdate = function(){return true;};
+    } else {
+        allowUpdate = function allowUpdate() {
+            return true;
+        };
     }
 
-    return function pointCB(event){
+    return function pointCB(event) {
 
         event = event || window.event; // IE-ism
         object.target = event.target || event.srcElement || event.originalTarget;
         object.element = this;
         object.type = event.type;
 
-        if(!allowUpdate(event)){
+        if (!allowUpdate(event)) {
             return;
         }
 
         // Support touch
         // http://www.creativebloq.com/javascript/make-your-site-work-touch-devices-51411644
 
-        if(event.targetTouches){
+        if (event.targetTouches) {
             object.x = event.targetTouches[0].clientX;
             object.y = event.targetTouches[0].clientY;
-            object.pageX = event.pageX;
-            object.pageY = event.pageY;
-        }else{
+            object.pageX = event.targetTouches[0].pageX;
+            object.pageY = event.targetTouches[0].pageY;
+            object.screenX = event.targetTouches[0].screenX;
+            object.screenY = event.targetTouches[0].screenY;
+        } else {
 
             // If pageX/Y aren't available and clientX/Y are,
             // calculate pageX/Y - logic taken from jQuery.
@@ -47,17 +53,13 @@ module.exports = function createPointCB(object, options){
             // NOTE Hopefully this can be removed soon.
 
             if (event.pageX === null && event.clientX !== null) {
-                var eventDoc = (event.target && event.target.ownerDocument) || document;
+                var eventDoc = event.target && event.target.ownerDocument || document;
                 var doc = eventDoc.documentElement;
                 var body = eventDoc.body;
 
-                object.pageX = event.clientX +
-                  (doc && doc.scrollLeft || body && body.scrollLeft || 0) -
-                  (doc && doc.clientLeft || body && body.clientLeft || 0);
-                object.pageY = event.clientY +
-                  (doc && doc.scrollTop  || body && body.scrollTop  || 0) -
-                  (doc && doc.clientTop  || body && body.clientTop  || 0 );
-            }else{
+                object.pageX = event.clientX + (doc && doc.scrollLeft || body && body.scrollLeft || 0) - (doc && doc.clientLeft || body && body.clientLeft || 0);
+                object.pageY = event.clientY + (doc && doc.scrollTop || body && body.scrollTop || 0) - (doc && doc.clientTop || body && body.clientTop || 0);
+            } else {
                 object.pageX = event.pageX;
                 object.pageY = event.pageY;
             }
@@ -69,14 +71,22 @@ module.exports = function createPointCB(object, options){
 
             object.x = event.clientX;
             object.y = event.clientY;
+
+            object.screenX = event.screenX;
+            object.screenY = event.screenY;
         }
 
+        object.clientX = object.x;
+        object.clientY = object.y;
     };
 
     //NOTE Remember accessibility, Aria roles, and labels.
-};
+}
 
 /*
 git remote add origin https://github.com/hollowdoor/create_point_cb.git
 git push -u origin master
 */
+
+module.exports = createPointCB;
+//# sourceMappingURL=bundle.js.map
