@@ -8,6 +8,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node ./rollit"
   },
+  "repository": {	
+    "type": "git",
+    "url": "https://github.com/hollowdoor/create_point_cb.git"
+  },
   "keywords": [
     "DOM",
     "point",
